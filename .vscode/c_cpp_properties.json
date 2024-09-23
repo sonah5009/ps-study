@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "macos-clang-arm64",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "compilerPath": "/Users/choesuna/miniforge3/bin/clang",
+      // "cStandard": "${default}",
+      "cppStandard": "c++17",
+      "cStandard": "c17",
+      // "cppStandard": "${default}",
+      "intelliSenseMode": "macos-clang-arm64",
+      "compilerArgs": [
+        ""
+      ]
+    }
+  ],
+  "version": 4
+}

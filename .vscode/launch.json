@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "/usr/bin/g++",
+      "args": [
+        "-g",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Generated task for building C++ code."
+    }
+  ]
+}
+
+// {
+//   "version": "0.2.0",
+//   "configurations": [
+//     {
+//       "name": "C/C++ Runner: Debug Session",
+//       "type": "lldb",
+//       "request": "launch",
+//       "args": [],
+//       "cwd": "/Users/choesuna/sonah-git/ps-study",
+//       "program": "/Users/choesuna/sonah-git/ps-study/build/Debug/outDebug"
+//     }
+//   ]
+// }
