@@ -1,48 +1,82 @@
 #include <iostream>
-#include <string>
-#include <algorithm>
 #include <vector>
-#include <cstring>
+#include <stack>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
-const int MN = 1001;
-
-vector<int> g[MN]; //인접 리스트
-bool vst[MN]; //방문 여부
-void dfs(int N) { //DFS
-    vst[N] = true; //방문 체크
-    cout << N << ' '; //방문한 노드 번호 출력
-    for(int e : g[N]) { //방문한 노드로부터 인접 리스트를 확인
-        if(!vst[e]) dfs(e); //방문하지 않은 노드 방문
-    }
-}
-
 int main() {
-    ios::sync_with_stdio(false); cin.tie(NULL);
-    int N, M, V; cin >> N >> M >> V;
-    for(int i = 0; i < M; i++) {
-        int u, v; cin >> u >> v;
-        g[u].push_back(v); //인접리스트 추가
-        g[v].push_back(u);
+    cin.tie(0)->sync_with_stdio(0);
+    int n=0, m=0,v=0; // 정점 수, 간선 수, 탐색 시작 번호
+    int a=0, b=0; // vector에 들어갈 정점 번호
+    cin >> n >> m >> v;
+    vector<int> graph[n+1];
+    
+
+    // graph 만들기
+    while(m--) {
+        cin >> a >> b;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+        sort(graph[a].begin(), graph[a].end());  // 정렬
+        sort(graph[b].begin(), graph[b].end());  // 정렬
     }
-    for(int i = 1; i <= N; i++) { //정점 번호 오름차순으로 정렬
-        sort(g[i].begin(), g[i].end());
+    
+    // dfs
+    stack<int> s;
+    bool visited[n+1];
+    for (int i = 1; i <= n; ++i) {
+        visited[i] = false;
     }
-    dfs(V); //V번 정점부터 DFS
-    cout << "\n" << V; //DFS출력 마지막을 나타내는 개행 후 BFS 시작정점 V출력
-    queue<int> q; //BFS에 사용할 queue
-    memset(vst, 0, sizeof(vst)); //방문 배열 초기화
-    q.push(V); //시작 정점 queue에 추가
-    vst[V] = true; //시작 정점 방문 체크
-    while(!q.empty()) { //모든 정점을 방문할 때까지
-        int now = q.front(); q.pop(); //queue의 첫 번째 pop
-        for(int e : g[now]) { //인접리스트 확인
-            if(!vst[e]) { //방문하지 않은 노드 발견할 경우
-                cout << ' ' << e; //정점 출력
-                vst[e] = 1; //방문 체크
-                q.push(e); //queue에 추가
+
+
+    
+// 스택
+    int tmp_v = v;
+    s.push(tmp_v);
+    while(!s.empty()) {
+        tmp_v = s.top();
+        s.pop();
+        if(!visited[tmp_v]) {
+            cout << tmp_v << ' ' ;
+            visited[tmp_v] = true;
+        }
+        for(int j=graph[tmp_v].size()-1; j>=0; --j) {
+            int element = graph[tmp_v][j];
+            if(!visited[element]) {
+                s.push(element);
+            }            
+        }   
+    }
+    cout << '\n';
+
+
+    // dfs 완료
+
+    // bfs
+    for (int i = 1; i <= n; ++i) {
+        visited[i] = false;
+    }
+    visited[v]=true;    // 탐색 시작
+    // bfs queue
+    queue<int> q;
+    q.push(v);
+    cout << q.front();
+    q.pop();
+
+    for(int i=0; i<n; ++i) {
+        for(int j=0; j<graph[v].size(); ++j){
+            int y = graph[v][j];
+            if(!visited[y]) {
+                q.push(y);
+                visited[y] = true;
             }
         }
+        if(!q.empty()) {
+            v = q.front();
+            q.pop();
+            cout << ' ' << v;
+        }
     }
+    return 0;
 }
